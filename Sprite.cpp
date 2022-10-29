@@ -17,7 +17,7 @@ Sprite::~Sprite()
 {
 }
 
-void Sprite::setImage(std::string imageName)
+void Sprite::setImage(std::string imageName) //Set the image of the sprite
 {
     if (!this->image.loadFromFile(imageName))
     {
@@ -26,17 +26,17 @@ void Sprite::setImage(std::string imageName)
     this->sfsprite.setTexture(image);
 }
 
-void Sprite::update(sf::RenderWindow* gameWindow)
+void Sprite::update(sf::RenderWindow* gameWindow) //To delete
 {
 
 }
 
-void Sprite::draw(sf::RenderWindow* gameWindow)
+void Sprite::draw(sf::RenderWindow* gameWindow) //Draw the sprite on the given window
 {
     gameWindow->draw(this->sfsprite);
 }
 
-void Sprite::setPosition(int x, int y)
+void Sprite::setPosition(int x, int y) //Set position of the sprite object with int x and y
 {
     this->sfsprite.setPosition(sf::Vector2f(x,y));
 }
@@ -106,7 +106,7 @@ float Sprite::width()
     return this->sfsprite.getGlobalBounds().width;
 }
 
-void Sprite::bounceX()
+void Sprite::bounceX() // Bounce for boundary detection
 {
     this->dx = this->dx*-1;
     this->ddx = this->ddx*-1;
@@ -118,14 +118,13 @@ void Sprite::bounceY()
     this->ddy = this->ddy*-1;
 }
 
-void Sprite::checkCollision(Sprite* otherSprite)
+bool Sprite::checkCollision(Sprite* otherSprite) // Check collision with another sprite, bounding rectangles.
 {
     if (this->sfsprite.getGlobalBounds().intersects(otherSprite->sfsprite.getGlobalBounds()))
     {
-        std::cout << "Collision" << std::endl;
-        bounceX();
-        bounceY();
-        otherSprite->bounceX();
+        //otherSprite->bounceX();
         otherSprite->bounceY();
+        return true;
     }
+    return false;
 }

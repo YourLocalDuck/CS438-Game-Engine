@@ -28,11 +28,14 @@ Scene::~Scene()
     delete sprites;
 }
 
-void Scene::init()
+void Scene::init() // Extention to the constructors to initialize the player and the game window
 {
     this->gameWindow = new sf::RenderWindow(sf::VideoMode(screenSize[0],screenSize[1]), "Test Game", sf::Style::Titlebar | sf::Style::Close);
     this->gameWindow->setFramerateLimit(30);
     sprites = new std::vector<Sprite*>;
+    player.setImage("assets/platform.png");
+    player.scale(.05,.1);
+    player.setPosition(300, 500);
 }
 
 bool Scene::running()
@@ -40,7 +43,7 @@ bool Scene::running()
     return this->gameWindow->isOpen();
 }
 
-void Scene::update()
+void Scene::update() // react to any poll events.
 {
     while (this->gameWindow->pollEvent(this->event))
         {
@@ -52,6 +55,35 @@ void Scene::update()
                 case sf::Event::KeyPressed:
                     if(event.key.code == sf::Keyboard::Escape)
                         this->gameWindow->close();
+                    else if (event.key.code == sf::Keyboard::D)
+                        player.setAccelX(1);
+                    else if (event.key.code == sf::Keyboard::A)
+                        player.setAccelX(-1);
+                    else if (event.key.code == sf::Keyboard::W)
+                        player.setAccelY(-1);
+                    else if (event.key.code == sf::Keyboard::S)
+                        player.setAccelY(1);
+                    else   
+                    {
+                        Sprite* cat = new Sprite("assets/cat.png");
+                        cat->setPosition(1,100);
+                        cat->scale(.1, .1);
+                        cat->setAccelY((float) rand() / (RAND_MAX));
+                        cat->setAccelX((float) rand() / (RAND_MAX));
+                        sprites->push_back(cat);
+                    }
+                    break;
+                case sf::Event::KeyReleased:
+                    if (event.key.code ==sf::Keyboard::D || event.key.code ==sf::Keyboard::A)
+                        {
+                            player.setAccelX(0);
+                            player.setVelX(0);
+                        }
+                    if (event.key.code ==sf::Keyboard::W || event.key.code ==sf::Keyboard::S)
+                        {
+                            player.setAccelY(0);
+                            player.setVelY(0);
+                        }
                     break;
                 default:
                     break;
@@ -60,29 +92,41 @@ void Scene::update()
     updateSpritePhysics();
 }
 
-void Scene::updateSpritePhysics()
+void Scene::updateSpritePhysics() //Iterate through every sprite to calculate position
 {
+    int ctr = 0;
     for (auto i : *sprites)
     {
-        if (i->getXPosition() <= 0 || i->getXPosition() >= (gameWindow->getSize().x - i->width()))
-        {
-            i->bounceX();
-        }
-
-        if (i->getYPosition() <= 0 || i->getYPosition() >= (gameWindow->getSize().y - i->height()))
-        {
-            i->bounceY();
-        }
-        
-        i->setVelX(i->getVelX()+i->getAccelX());
-        i->setVelY(i->getVelY()+i->getAccelY());
-        std::cout << i->getVelY() << std::endl;
-        i->setPosition(i->getXPosition()+i->getVelX(), i->getYPosition()+i->getVelY());
+        updatePhysics(i);
     }
-    sprites->at(0)->checkCollision(sprites->at(1));
+    updatePhysics(&player);
+    for (auto i : *sprites)
+    {
+        if(player.checkCollision(i))
+        {
+            updatePhysics(i);
+        }
+    }
 }
 
-void Scene::draw()
+void Scene::updatePhysics(Sprite* sprite) // Use dx, dy, ddx, and ddy to caluclate new position for sprite.
+{
+    if (sprite->getXPosition() <= 0 || sprite->getXPosition() >= (gameWindow->getSize().x - sprite->width()))
+        {
+            sprite->bounceX();
+        }
+
+        if (sprite->getYPosition() <= 0)// || sprite->getYPosition() >= (gameWindow->getSize().y - sprite->height()))
+        {
+            sprite->bounceY();
+        }
+        
+        sprite->setVelX(sprite->getVelX()+sprite->getAccelX());
+        sprite->setVelY(sprite->getVelY()+sprite->getAccelY());
+        sprite->setPosition(sprite->getXPosition()+sprite->getVelX(), sprite->getYPosition()+sprite->getVelY());
+}
+
+void Scene::draw() //Draw the screen after the new positions have been updated.
 {
     this->gameWindow->clear();
 
@@ -90,11 +134,11 @@ void Scene::draw()
     {
         i->draw(this->gameWindow);
     }
-
+    player.draw(this->gameWindow);
     this->gameWindow->display();
 }
 
-Sprite* Scene::newSprite(std::string imgName)
+Sprite* Scene::newSprite(std::string imgName) //Create a new sprite on the canvas.
 {
     Sprite* createdSprite = new Sprite(imgName);
     this->sprites->push_back(createdSprite);

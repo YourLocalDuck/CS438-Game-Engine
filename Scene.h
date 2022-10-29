@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "Sprite.h"
+#include "Player.h"
 
 class Scene
 {
@@ -12,6 +12,8 @@ class Scene
         void init();
         std::vector<Sprite*>* sprites;
         void updateSpritePhysics();
+        void updatePhysics(Sprite* sprite);
+        Player player;
         
     public:
         Scene();

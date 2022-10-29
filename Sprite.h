@@ -6,10 +6,12 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
 
 class Sprite
 {
-private:
+protected:
     sf::Texture image;
     sf::Sprite sfsprite;
     float dx;
@@ -37,9 +39,10 @@ public:
     float getVelY();
     float height();
     float width();
-    void bounceX();
-    void bounceY();
-    void checkCollision(Sprite* othersprite);
+    virtual void bounceX();
+    virtual void bounceY();
+    bool checkCollision(Sprite* othersprite);
+    void suspendSelf();
 };
 
 #endif
