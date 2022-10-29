@@ -2,12 +2,13 @@
 #include <math.h>
 
 Sprite::Sprite()
-    :dx(0),dy(0),ddx(0),ddy(0)
+    :dx(0),dy(0),ddx(0),ddy(0),inBounds(true)
 {
     this->sfsprite.setPosition(sf::Vector2f(0,0));
 }
 
 Sprite::Sprite(std::string imageName)
+    :dx(0),dy(0),ddx(0),ddy(0),inBounds(true)
 {
     this->sfsprite.setPosition(sf::Vector2f(0,0));
     setImage(imageName);
@@ -127,4 +128,14 @@ bool Sprite::checkCollision(Sprite* otherSprite) // Check collision with another
         return true;
     }
     return false;
+}
+
+void Sprite::outOfBounds()
+{
+    this->inBounds = false;
+}
+
+bool Sprite::onScreen()
+{
+    return inBounds;
 }

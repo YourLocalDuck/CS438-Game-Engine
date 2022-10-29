@@ -6,7 +6,7 @@ CC	 = g++
 FLAGS	 = -g -c -lsfml-graphics -lsfml-window -lsfml-system
 LFLAGS	 = -lsfml-graphics -lsfml-window -lsfml-system
 
-all: $(OBJS)
+$(OUT): $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
 main.o: main.cpp

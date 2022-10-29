@@ -18,6 +18,7 @@ protected:
     float dy;
     float ddx;
     float ddy;
+    bool inBounds;
 public:
     Sprite();
     Sprite(std::string imageName);
@@ -43,6 +44,8 @@ public:
     virtual void bounceY();
     bool checkCollision(Sprite* othersprite);
     void suspendSelf();
+    void outOfBounds();
+    bool onScreen();
 };
 
 #endif
