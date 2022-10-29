@@ -117,3 +117,15 @@ void Sprite::bounceY()
     this->dy = this->dy*-1;
     this->ddy = this->ddy*-1;
 }
+
+void Sprite::checkCollision(Sprite* otherSprite)
+{
+    if (this->sfsprite.getGlobalBounds().intersects(otherSprite->sfsprite.getGlobalBounds()))
+    {
+        std::cout << "Collision" << std::endl;
+        bounceX();
+        bounceY();
+        otherSprite->bounceX();
+        otherSprite->bounceY();
+    }
+}

@@ -39,7 +39,7 @@ public:
     float width();
     void bounceX();
     void bounceY();
-    bool checkBounds(Sprite* othersprite);
+    void checkCollision(Sprite* othersprite);
 };
 
 #endif

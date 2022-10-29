@@ -79,6 +79,7 @@ void Scene::updateSpritePhysics()
         std::cout << i->getVelY() << std::endl;
         i->setPosition(i->getXPosition()+i->getVelX(), i->getYPosition()+i->getVelY());
     }
+    sprites->at(0)->checkCollision(sprites->at(1));
 }
 
 void Scene::draw()
