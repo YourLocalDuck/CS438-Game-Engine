@@ -1,14 +1,37 @@
-# GameEngine
+# Project Introduction
 
-## How to run the Program:
-Just run `make run`, and make sure you have sfml. Easy way to get it on debian is `sudo apt-get install libsfml-dev`
+This is a game engine created using SFML and C++. It works like other game engines by using sprites, updating their locations, and then drawing them in different steps. The engine includes boundary detection, allowing cat sprites to bounce off the top, left, and right borders, and collision detection, which makes them bounce when touching the player-controlled platform sprite.
 
-## Dependencies
-SFML, g++, make
+The sample game involves preventing the cat sprites from falling off the screen by bouncing them up with a player-controlled platform sprite, which can be moved left and right using the A and D keys. If a cat sprite falls off the screen or if you want to spawn another one, you can press any key.
 
-## Description
-This project is a game engine that I made using SFML and C++. It works like other game engines by using sprites and updating their locations, and then drawing them, all in different steps. I have added boundary detection, as the cat sprites will bounce from the top, left, and right borders, and collision detection, as they will bounce when touching the player-controlled platform sprite.
+The engine is designed to be easily customizable, supporting different sprites and their behaviors. For example, you can modify how sprites interact with borders or change their images, dimensions, and rotations.
 
-The sample game is trying not to let the cat sprites fall off the screen by bouncing them up with your player-controlled platform sprite. You can move this sprite using A and D to go left and right. If the cat sprite does fall off the screen (or even if it doesn't), you can press any key to spawn in another one. 
+# How to Compile
 
-As for the engine, it is easy to customize to needs, as sprites are supported, and how they act is also easily changed. For example, you can see that I stopped the cat sprites from bouncing off of the bottom border just by commenting out a part of the code in Scene.cpp. It is easy to change sprites' images, dimensions, and rotations.  It is even easy to change to wrapping instead of bouncing if it is more desired.
+To compile the project, ensure you have SFML, g++, and make installed on your system.
+
+### Debian-based Systems
+
+1. Install SFML: `sudo apt-get install libsfml-dev`
+2. Compile the project: `make`
+
+# How to Run
+
+Once compiled, you can run the program using the following command:
+
+```sh
+make run
+```
+# Input/Output (For Sample Game)
+
+### Input
+**A Key: Move the platform sprite to the left.**
+**D Key: Move the platform sprite to the right.**
+**Any Key: Spawn a new cat sprite.**
+
+### Output
+**The game displays a player-controlled platform sprite and multiple cat sprites. The objective is to keep the cat sprites from falling off the screen by bouncing them with the platform sprite.**
+
+# Team
+This project was created as an assignment by a single developer for CS438.
+
