@@ -25,9 +25,9 @@ make run
 # Input/Output (For Sample Game)
 
 ### Input
-**A Key: Move the platform sprite to the left.**
-**D Key: Move the platform sprite to the right.**
-**Any Key: Spawn a new cat sprite.**
+- **A Key: Move the platform sprite to the left.**
+- **D Key: Move the platform sprite to the right.**
+- **Any Key: Spawn a new cat sprite.**
 
 ### Output
 **The game displays a player-controlled platform sprite and multiple cat sprites. The objective is to keep the cat sprites from falling off the screen by bouncing them with the platform sprite.**
